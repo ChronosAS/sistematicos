@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Facade;
-use Illuminate\Support\ServiceProvider;
 
 return [
 
@@ -16,7 +15,63 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'Aimeos'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Enable multi-locale site
+    |--------------------------------------------------------------------------
+    |
+    | Activates support for multiple locales (languages).
+    | You have to add translations for some frontend strings in
+    | ./resources/lang/<locale>/
+    |
+    */
+
+    'shop_multilocale' => env('SHOP_MULTILOCALE', false),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Enable multi-tenancy features
+    |--------------------------------------------------------------------------
+    |
+    | Activates routing for multiple shops (SaaS or marketplace). By default,
+    | the account name is used in the URL but custom domains or subdomains
+    | are also possible by using a different route configuration in the
+    | ./config/shop.php file:
+    | https://aimeos.org/docs/latest/laravel/customize/#adapt-the-routing
+    |
+    */
+
+    'shop_multishop' => env('SHOP_MULTISHOP', false),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Enable merchant registration
+    |--------------------------------------------------------------------------
+    |
+    | Activates self-registration for new sellers. They can register themselves
+    | to get a new account and shop. They only need to confirm their e-mail and
+    | can create and sell products immediately.
+    |
+    */
+
+    'shop_registration' => env('SHOP_REGISTRATION', false),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Permission level for new merchants
+    |--------------------------------------------------------------------------
+    |
+    | Possible values: "admin" and "editor"
+    | Administrators can change everything in their own shop including payments
+    | and delivery while editors can only manage content like products, etc.
+    | The available panels for both can be configured:
+    | https://aimeos.org/docs/latest/admin/jqadm/implement-panels/#permissions
+    |
+    */
+
+    'shop_permission' => env('SHOP_PERMISSION', 'admin'),
 
     /*
     |--------------------------------------------------------------------------
@@ -83,7 +138,7 @@ return [
     |
     */
 
-    'locale' => 'es',
+    'locale' => 'en',
 
     /*
     |--------------------------------------------------------------------------
@@ -96,7 +151,7 @@ return [
     |
     */
 
-    'fallback_locale' => 'es',
+    'fallback_locale' => 'en',
 
     /*
     |--------------------------------------------------------------------------
@@ -128,24 +183,6 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Maintenance Mode Driver
-    |--------------------------------------------------------------------------
-    |
-    | These configuration options determine the driver used to determine and
-    | manage Laravel's "maintenance mode" status. The "cache" driver will
-    | allow maintenance mode to be controlled across multiple machines.
-    |
-    | Supported drivers: "file", "cache"
-    |
-    */
-
-    'maintenance' => [
-        'driver' => 'file',
-        // 'store' => 'redis',
-    ],
-
-    /*
-    |--------------------------------------------------------------------------
     | Autoloaded Service Providers
     |--------------------------------------------------------------------------
     |
@@ -155,7 +192,34 @@ return [
     |
     */
 
-    'providers' => ServiceProvider::defaultProviders()->merge([
+    'providers' => [
+
+        /*
+         * Laravel Framework Service Providers...
+         */
+        Illuminate\Auth\AuthServiceProvider::class,
+        Illuminate\Broadcasting\BroadcastServiceProvider::class,
+        Illuminate\Bus\BusServiceProvider::class,
+        Illuminate\Cache\CacheServiceProvider::class,
+        Illuminate\Foundation\Providers\ConsoleSupportServiceProvider::class,
+        Illuminate\Cookie\CookieServiceProvider::class,
+        Illuminate\Database\DatabaseServiceProvider::class,
+        Illuminate\Encryption\EncryptionServiceProvider::class,
+        Illuminate\Filesystem\FilesystemServiceProvider::class,
+        Illuminate\Foundation\Providers\FoundationServiceProvider::class,
+        Illuminate\Hashing\HashServiceProvider::class,
+        Illuminate\Mail\MailServiceProvider::class,
+        Illuminate\Notifications\NotificationServiceProvider::class,
+        Illuminate\Pagination\PaginationServiceProvider::class,
+        Illuminate\Pipeline\PipelineServiceProvider::class,
+        Illuminate\Queue\QueueServiceProvider::class,
+        Illuminate\Redis\RedisServiceProvider::class,
+        Illuminate\Auth\Passwords\PasswordResetServiceProvider::class,
+        Illuminate\Session\SessionServiceProvider::class,
+        Illuminate\Translation\TranslationServiceProvider::class,
+        Illuminate\Validation\ValidationServiceProvider::class,
+        Illuminate\View\ViewServiceProvider::class,
+
         /*
          * Package Service Providers...
          */
@@ -168,9 +232,8 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        App\Providers\FortifyServiceProvider::class,
-        App\Providers\JetstreamServiceProvider::class,
-    ])->toArray(),
+
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -184,7 +247,7 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
-        // 'Example' => App\Facades\Example::class,
+        // 'ExampleClass' => App\Example\ExampleClass::class,
     ])->toArray(),
 
 ];
